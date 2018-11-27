@@ -6,16 +6,34 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-
+import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateAttributeConverter;
 
-
+@Entity
+@Table(name = "PACIENTE")
 public class Paciente {
 	
+	@Id
+	@SequenceGenerator(name="pacienteId", sequenceName="id_paciente_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pacienteId")
+	@Column(name="ID_PACIENTE")
 	private Long idPaciente;	
+	
+	@Column(name = "NUM_PACIENTES", nullable = false)
 	private String numPaciente;
+	
+	@Column(name = "NOMBRE", nullable = false)
 	private String nomeCompleto;
+	
+	@Column(name = "CODIGO", nullable = false)
 	private LocalDate dataNacemento;
 	private SortedSet<Cita> citas = new TreeSet<Cita>(); 
 

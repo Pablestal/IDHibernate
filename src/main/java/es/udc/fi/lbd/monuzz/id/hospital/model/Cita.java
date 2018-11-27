@@ -2,16 +2,36 @@ package es.udc.fi.lbd.monuzz.id.hospital.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateTimeAttributeConverter;
 
-
-
+@Entity
+@Table(name = "CITA")
 public abstract class Cita implements Comparable<Cita> {
 	
+	@Id
+	@SequenceGenerator(name="citaId", sequenceName="id_cita_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="citaId")
+	@Column(name="ID_CITA")
 	protected Long idCita;
+	
+	@Column(name = "CODIGO", nullable = false, unique = true)
 	protected String codigo;
+	
+	@Column(name = "FECHA_CITA", nullable = false)
 	protected LocalDateTime dataHora;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	protected Paciente paciente;
 
 	// Clave surrogada: idCita
