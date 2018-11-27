@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateTimeAttributeConverter;
 
 @Entity
+@Inheritance
 @Table(name = "CITA")
 public abstract class Cita implements Comparable<Cita> {
 	

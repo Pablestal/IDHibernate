@@ -1,11 +1,33 @@
 package es.udc.fi.lbd.monuzz.id.hospital.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MEDICO")
 public class Medico {
 	
+	@Id
+	@SequenceGenerator(name="medicoId", sequenceName="id_medico_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="medicoId")
+	@Column(name="ID_MEDICO")
 	private Long idMedico;	
+	
+	@Column(name = "NUM_COLEGIADO", nullable = false, unique = true)
 	private String numColexiado;
+	
+	@Column(name = "NOMBRE_APELLIDOS", nullable = false)
 	private String nomeCompleto;
+	
+	@Column(name = "ESPECIALIDAD", nullable = false)
 	private String especialidade;
+	
+	@Column(name = "ACTIVO", nullable = false)
 	private Boolean activo;
 	
 	// Clave surrogada: idMedico

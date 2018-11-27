@@ -2,10 +2,25 @@ package es.udc.fi.lbd.monuzz.id.hospital.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@PrimaryKeyJoinColumn(name = "ID_CITA")
+@Table(name = "PROBA")
 public class Proba extends Cita {
 	
+	@Column(name = "ESPECIFICACIONES", nullable = false)
 	private String especificacions;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private TipoProba tipoProba;
+	
+	@Column(name = "RESULTADO", nullable = true)
 	private String resultado;
 
 	// Atributos obrigatorios: especificacions, tipoproba
