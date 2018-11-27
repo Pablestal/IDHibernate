@@ -9,9 +9,14 @@ import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,15 +32,23 @@ public class Paciente {
 	@Column(name="ID_PACIENTE")
 	private Long idPaciente;	
 	
-	@Column(name = "NUM_PACIENTES", nullable = false)
+	@Column(name = "NUM_PACIENTES", nullable = false, unique = true)
 	private String numPaciente;
 	
 	@Column(name = "NOMBRE", nullable = false)
 	private String nomeCompleto;
 	
-	@Column(name = "CODIGO", nullable = false)
+	@Column(name = "CODIGO", nullable = true)
 	private LocalDate dataNacemento;
-	private SortedSet<Cita> citas = new TreeSet<Cita>(); 
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "PACIENTE_CITA",
+			joinColumns = {@JoinColumn(name = "paciente_id")},
+			inverseJoinColumns = {@JoinColumn (name = "cita_id")}
+			)
+	@OrderBy("dataHora")
+	private SortedSet<Cita> citas = new TreeSet<Cita>();
 
 	// Clave surrogada: idPaciente
 	// Clave natural: numPaciente
