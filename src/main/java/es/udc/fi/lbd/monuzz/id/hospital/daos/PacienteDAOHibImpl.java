@@ -2,45 +2,63 @@ package es.udc.fi.lbd.monuzz.id.hospital.daos;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import es.udc.fi.lbd.monuzz.id.hospital.model.Paciente;
 
-
+@Repository
 public class PacienteDAOHibImpl implements PacienteDAO {
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
 	public Long create(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		if (meuPaciente.getIdPaciente()!= null) {
+			throw new RuntimeException("Este paciente ya existe:" + meuPaciente.toString());
+		}
+		Long id = (Long) sessionFactory.getCurrentSession().save(meuPaciente);
+		sessionFactory.getCurrentSession().flush(); 
+		return id;
 	}
 
 	@Override
 	public void update(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		
+		if (meuPaciente.getIdPaciente() == null) {
+			throw new RuntimeException("Este paciente no existe.");
+		}
+		sessionFactory.getCurrentSession().update(meuPaciente);
+		sessionFactory.getCurrentSession().flush(); 
 	}
 
 	@Override
 	public void remove(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		
+		if (meuPaciente.getIdPaciente() == null) {
+			throw new RuntimeException("Este paciente no existe.");
+		}
+		sessionFactory.getCurrentSession().delete(meuPaciente);
+		sessionFactory.getCurrentSession().flush();
 	}
 
 	@Override
 	public Paciente findPacienteById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().get(Paciente.class, id);
+		return paciente;
 	}
 
 	@Override
 	public Paciente findPacienteByNum(String numPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().get(Paciente.class, numPaciente);
+		return paciente;
 	}
 
 	@Override
 	public List<Paciente> findAllPacientes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Paciente> pacientes = (List<Paciente>) sessionFactory.getCurrentSession().createQuery("from paciente p order by numPaciente").list();
+		return pacientes;
 	}
 
 }

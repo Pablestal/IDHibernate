@@ -30,9 +30,9 @@ public class Consulta extends Cita {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
-			name = "CONSULTA_DOENZAS",
+			name = "CONSULTA_DOLENCIAS",
 			joinColumns = {@JoinColumn(name = "consulta_id")},
-			inverseJoinColumns = {@JoinColumn (name = "doenza_id")}
+			inverseJoinColumns = {@JoinColumn (name = "dolencia_id")}
 			)
 	private Set<TipoDoenza> doenzas = new HashSet<TipoDoenza>();
 
