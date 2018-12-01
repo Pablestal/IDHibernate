@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,7 +19,7 @@ import javax.persistence.Table;
 import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateTimeAttributeConverter;
 
 @Entity
-@Inheritance
+@Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "CITA")
 public abstract class Cita implements Comparable<Cita> {
 	
@@ -34,6 +36,7 @@ public abstract class Cita implements Comparable<Cita> {
 	protected LocalDateTime dataHora;
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name="ID_PACIENTE")
 	protected Paciente paciente;
 
 	// Clave surrogada: idCita

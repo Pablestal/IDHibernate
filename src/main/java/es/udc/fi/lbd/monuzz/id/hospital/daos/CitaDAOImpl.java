@@ -68,56 +68,77 @@ public class CitaDAOImpl implements CitaDAO {
 
 	@Override
 	public List<Consulta> findAllConsultasMedicoData(Medico meuMedico, LocalDate minhaData) {
-		List<Consulta> consultas = (List<Consulta>) sessionFactory.getCurrentSession().createQuery("").list();
+		List<Consulta> consultas = (List<Consulta>) sessionFactory.getCurrentSession().createQuery
+		("from consulta a join cita b "
+		+ "on a.id_cita = b.id_cita "
+		+ "where a.medico = meuMedico and b.dataHora = minhaData "
+		+ "order by b.dataHora").setParameter("meuMedico", meuMedico).setParameter("minhaData", minhaData).list();
 		return consultas;
 	}
 
 	@Override
 	public List<Proba> findAllProbasData(LocalDate minhaData) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Proba> probas = (List<Proba>) sessionFactory.getCurrentSession().createQuery
+		("from prueba a join cita b "
+		+ "on a.id_cita = b.id_cita "
+		+ "where b.dataHota = minhaData "
+		+ "order by b.dataHota").setParameter("minhaData", minhaData).list();
+		return probas;
 	}
 
 	@Override
 	public List<Consulta> findAllConsultasPaciente(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Consulta> consultas = (List<Consulta>) sessionFactory.getCurrentSession().createQuery
+		("from cita a join consulta b"
+		+ "on a.id_cita = b.id_cita"
+		+ "where a.id_paciente = meuPaciente"
+		+ "orderby a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
+		return consultas;
 	}
 
 	@Override
 	public List<Proba> findAllProbasPaciente(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Proba> probas = (List<Proba>) sessionFactory.getCurrentSession().createQuery
+		("from cita a join prueba b"
+		+ "on a.id_cita = b.id_cita"
+		+ "where a.id_paciente = meuPaciente"
+		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
+		return probas;
 	}
 
 	@Override
 	public SortedSet<Cita> findAllCitasPaciente(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		SortedSet<Cita> citas = (SortedSet<Cita>) sessionFactory.getCurrentSession().createQuery
+		("from citas "
+		+ "where id_paciente = meuPaciente"
+		+ "order by dataHora desc").setParameter("meuPaciente", meuPaciente).list();
+		return citas;
 	}
 
 	@Override
 	public Paciente findPacienteCita(Cita minhaCita) {
-		// TODO Auto-generated method stub
-		return null;
+		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().get(Cita.class, minhaCita.getIdCita()).getPaciente();
+		return paciente;
 	}
 
 	@Override
 	public Medico findMedicoConsulta(Consulta minhaConsulta) {
-		// TODO Auto-generated method stub
-		return null;
+		Medico medico = (Medico) sessionFactory.getCurrentSession().get(Consulta.class, minhaConsulta.getIdCita()).getMedico();
+		return medico;
 	}
 
 	@Override
 	public Set<TipoDoenza> findAllDoenzasConsulta(Consulta minhaCita) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<TipoDoenza> doenzas = (Set<TipoDoenza>) sessionFactory.getCurrentSession().createQuery
+		("from consulta_dolencias"
+		+ "where consulta_id = minhaCita").setParameter("minhaCita", minhaCita).list();
+		return doenzas;
 	}
 
 	@Override
 	public TipoProba findTipoProba(Proba minhaCita) {
-		// TODO Auto-generated method stub
-		return null;
+		TipoProba proba = (TipoProba) sessionFactory.getCurrentSession().get(Proba.class, minhaCita.getIdCita()).getTipoProba();
+		return proba;
 	}
 
 }

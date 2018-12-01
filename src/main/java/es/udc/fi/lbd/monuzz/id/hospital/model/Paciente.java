@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -14,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
@@ -42,11 +42,8 @@ public class Paciente {
 	private LocalDate dataNacemento;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "PACIENTE_CITA",
-			joinColumns = {@JoinColumn(name = "paciente_id")},
-			inverseJoinColumns = {@JoinColumn (name = "cita_id")}
-			)
+	@JoinColumn(name="ID_PACIENTE")
+	//@CollectionTable(name="paciente_citas", joinColumns=@JoinColumn(name="ID_PACIENTE"))
 	@OrderBy("dataHora")
 	private SortedSet<Cita> citas = new TreeSet<Cita>();
 
