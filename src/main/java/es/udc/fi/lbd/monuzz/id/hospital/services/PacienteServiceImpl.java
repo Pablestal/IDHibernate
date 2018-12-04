@@ -5,12 +5,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.hospital.daos.PacienteDAO;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Paciente;
 
-
+@Service
 public class PacienteServiceImpl implements PacienteService {
 
 	static Logger log = Logger.getLogger("hospital");

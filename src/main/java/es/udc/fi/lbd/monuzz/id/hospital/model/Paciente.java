@@ -43,7 +43,6 @@ public class Paciente {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PACIENTE")
-	//@CollectionTable(name="paciente_citas", joinColumns=@JoinColumn(name="ID_PACIENTE"))
 	@OrderBy("dataHora")
 	private SortedSet<Cita> citas = new TreeSet<Cita>();
 

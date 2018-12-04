@@ -8,13 +8,14 @@ import java.util.SortedSet;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.hospital.daos.CitaDAO;
 import es.udc.fi.lbd.monuzz.id.hospital.daos.HospitalDAO;
-import es.udc.fi.lbd.monuzz.id.hospital.daos.PacienteDAO;
 import es.udc.fi.lbd.monuzz.id.hospital.model.*;
 
+@Service
 public class HospitalServiceImpl implements HospitalService {
 	
 	static Logger log = Logger.getLogger("hospital");
@@ -329,6 +330,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=false)
 	public Cita recuperarCitaBDPorId(Long id) {
 		Cita cita;
 		try {
@@ -418,33 +420,78 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=true)
 	public SortedSet<Cita> recuperarTodasCitasPaciente(Paciente meuPaciente) {
-		// TODO Auto-generated method stub
-		return null;
+		SortedSet<Cita> citas;
+		try {
+			citas = meuPaciente.getCitas();
+			log.info("Citas encontradas con éxito.");
+		}
+		catch (DataAccessException e){
+			log.error("No se han podido encontrar las citas.");
+			throw e;
+		}
+		return citas;
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=true)
 	public Paciente recuperarPacienteCita(Cita minhaCita) {
-		// TODO Auto-generated method stub
-		return null;
+		Paciente paciente;
+		try {
+			paciente = minhaCita.getPaciente();
+			log.info("Paciente encontrado con éxito: " + minhaCita.toString());
+		}
+		catch (DataAccessException e){
+			log.error("No se han podido encontrar el paciente.");
+			throw e;
+		}
+		return paciente;
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=true)
 	public Medico recuperarMedicoConsulta(Consulta minhaConsulta) {
-		// TODO Auto-generated method stub
-		return null;
+		Medico medico;
+		try {
+			medico = minhaConsulta.getMedico();
+			log.info("Médico encontrado con éxito: " + medico.toString());
+		}
+		catch (DataAccessException e){
+			log.error("No se ha podido encontrar el médico.");
+			throw e;
+		}
+		return medico;
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=true)
 	public Set<TipoDoenza> recuperarDoenzasConsulta(Consulta minhaConsulta) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<TipoDoenza> doenza;
+		try {
+			doenza = minhaConsulta.getDoenzas();
+			log.info("Dolencias encontradas con éxito: ");
+		}
+		catch (DataAccessException e){
+			log.error("No se han podido encontrar las dolencias.");
+			throw e;
+		}
+		return doenza;
 	}
 
 	@Override
+	@Transactional(value="myTransactionManager", readOnly=true)
 	public TipoProba recuperarTipoProba(Proba minhaProba) {
-		// TODO Auto-generated method stub
-		return null;
+		TipoProba proba;
+		try {
+			proba = minhaProba.getTipoProba();
+			log.info("Dolencias encontradas con éxito: " + proba.toString());
+		}
+		catch (DataAccessException e){
+			log.error("No se ha podido encontrar el tipo de prueba.");
+			throw e;
+		}
+		return proba;
 	}
 
 
