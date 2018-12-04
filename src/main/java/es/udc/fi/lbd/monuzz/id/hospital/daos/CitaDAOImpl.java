@@ -117,14 +117,12 @@ public class CitaDAOImpl implements CitaDAO {
 
 	@Override
 	public Paciente findPacienteCita(Cita minhaCita) {
-		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().get(Cita.class, minhaCita.getIdCita()).getPaciente();
-		return paciente;
+		return minhaCita.getPaciente();
 	}
 
 	@Override
 	public Medico findMedicoConsulta(Consulta minhaConsulta) {
-		Medico medico = (Medico) sessionFactory.getCurrentSession().get(Consulta.class, minhaConsulta.getIdCita()).getMedico();
-		return medico;
+		return minhaConsulta.getMedico();
 	}
 
 	@Override
@@ -137,8 +135,7 @@ public class CitaDAOImpl implements CitaDAO {
 
 	@Override
 	public TipoProba findTipoProba(Proba minhaCita) {
-		TipoProba proba = (TipoProba) sessionFactory.getCurrentSession().get(Proba.class, minhaCita.getIdCita()).getTipoProba();
-		return proba;
+		return minhaCita.getTipoProba();
 	}
 
 }

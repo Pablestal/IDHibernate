@@ -72,7 +72,7 @@ public class HospitalDAOImpl implements HospitalDAO {
 		if (minhaDoenza.getIdTipoDoenza()!= null) {
 			throw new RuntimeException("Esta dolencia ya existe:" + minhaDoenza.toString());
 		}
-		Long id = (Long) sessionFactory.getCurrentSession().save(minhaDoenza              );
+		Long id = (Long) sessionFactory.getCurrentSession().save(minhaDoenza);
 		sessionFactory.getCurrentSession().flush(); 
 		return id;
 	}
@@ -118,7 +118,7 @@ public class HospitalDAOImpl implements HospitalDAO {
 		if (minhaProba.getIdTipoProba()!= null) {
 			throw new RuntimeException("Esta prueba ya existe:" + minhaProba.toString());
 		}
-		Long id = (Long) sessionFactory.getCurrentSession().save(minhaProba              );
+		Long id = (Long) sessionFactory.getCurrentSession().save(minhaProba);
 		sessionFactory.getCurrentSession().flush(); 
 		return id;
 	}
