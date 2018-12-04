@@ -8,7 +8,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.dao.DataAccessException;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
 import es.udc.fi.lbd.monuzz.id.hospital.model.TipoDoenza;
 import es.udc.fi.lbd.monuzz.id.hospital.model.TipoProba;
@@ -57,13 +57,13 @@ public class HospitalDAOImpl implements HospitalDAO {
 
 	@Override
 	public Medico findMedicoByNumColexiado(String numColexiado) {
-		Medico medico = (Medico) sessionFactory.getCurrentSession().get(Medico.class, numColexiado);
+		Medico medico = (Medico) sessionFactory.getCurrentSession().createQuery("from Medico where numColexiado = :numColexiado").setParameter("numColexiado", numColexiado).uniqueResult();
 		return medico;
 	}
 
 	@Override
 	public List<Medico> findAllMedicos() {
-		List<Medico> medicos = (List<Medico>) sessionFactory.getCurrentSession().createQuery("from medico order by especialidad, numColegiado").list();
+		List<Medico> medicos = (List<Medico>) sessionFactory.getCurrentSession().createQuery("from Medico order by especialidade desc, numColexiado").list();
 		return medicos;
 	}
 
@@ -103,13 +103,13 @@ public class HospitalDAOImpl implements HospitalDAO {
 
 	@Override
 	public TipoDoenza findTipoDoenzaByCodigo(String codigo) {
-		TipoDoenza doenza = (TipoDoenza) sessionFactory.getCurrentSession().get(TipoDoenza.class, codigo);
+		TipoDoenza doenza = (TipoDoenza) sessionFactory.getCurrentSession().createQuery("from TipoDoenza where codigo = :codigo").setParameter("codigo", codigo).uniqueResult();
 		return doenza;
 	}
 
 	@Override
 	public List<TipoDoenza> findAllTiposDoenzas() {
-		List<TipoDoenza> doenzas = (List<TipoDoenza>) sessionFactory.getCurrentSession().createQuery("from tipo_dolencia order by nombre").list(); 
+		List<TipoDoenza> doenzas = (List<TipoDoenza>) sessionFactory.getCurrentSession().createQuery("from TipoDoenza order by nombre").list(); 
 		return doenzas;
 	}
 
@@ -149,13 +149,13 @@ public class HospitalDAOImpl implements HospitalDAO {
 
 	@Override
 	public TipoProba findTipoProbaByCodigo(String codigo) {
-		TipoProba proba = (TipoProba) sessionFactory.getCurrentSession().get(TipoProba.class, codigo);
+		TipoProba proba = (TipoProba) sessionFactory.getCurrentSession().createQuery("from TipoProba where codigo = :codigo").setParameter("codigo", codigo).uniqueResult(); 
 		return proba;
 	}
 
 	@Override
 	public List<TipoProba> findAllTiposProbas() {
-		List<TipoProba> probas = (List<TipoProba>) sessionFactory.getCurrentSession().createQuery("from tipo_prueba order by nombre").list();
+		List<TipoProba> probas = (List<TipoProba>) sessionFactory.getCurrentSession().createQuery("from TipoProba order by nome").list();
 		return probas;
 	}
 

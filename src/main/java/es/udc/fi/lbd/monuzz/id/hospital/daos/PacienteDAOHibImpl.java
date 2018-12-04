@@ -51,13 +51,13 @@ public class PacienteDAOHibImpl implements PacienteDAO {
 
 	@Override
 	public Paciente findPacienteByNum(String numPaciente) {
-		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().get(Paciente.class, numPaciente);
+		Paciente paciente = (Paciente) sessionFactory.getCurrentSession().createQuery("from Paciente where numPaciente = :numPaciente").setParameter("numPaciente", numPaciente).uniqueResult();
 		return paciente;
 	}
 
 	@Override
 	public List<Paciente> findAllPacientes() {
-		List<Paciente> pacientes = (List<Paciente>) sessionFactory.getCurrentSession().createQuery("from paciente p order by numPaciente").list();
+		List<Paciente> pacientes = (List<Paciente>) sessionFactory.getCurrentSession().createQuery("from Paciente p order by p.numPaciente desc").list();
 		return pacientes;
 	}
 
