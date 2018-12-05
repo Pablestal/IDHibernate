@@ -67,7 +67,7 @@ public class PacienteServiceImpl implements PacienteService {
 		Paciente paciente;
 		try {
 			paciente = pacienteDAO.findPacienteById(id);
-			log.info("Paciente econtrado: " + paciente.toString());
+			if (paciente != null )log.info("Paciente econtrado: " + paciente.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar al paciente.");
@@ -82,8 +82,7 @@ public class PacienteServiceImpl implements PacienteService {
 		Paciente paciente;
 		try {
 			paciente = pacienteDAO.findPacienteByNum(num);
-			if (paciente == null) return paciente;
-			log.info("Paciente econtrado: " + paciente.toString());
+			if (paciente != null) log.info("Paciente econtrado: " + paciente.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar al paciente.");

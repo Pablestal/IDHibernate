@@ -3,10 +3,8 @@
  */
 package es.udc.fi.lbd.monuzz.id.hospital.daos;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -14,9 +12,6 @@ import java.util.SortedSet;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateAttributeConverter;
-import es.udc.fi.lbd.monuzz.id.hospital.converters.LocalDateTimeAttributeConverter;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Cita;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Consulta;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
@@ -30,8 +25,6 @@ public class CitaDAOImpl implements CitaDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	private LocalDateAttributeConverter converter;
 	
 	@Override
 	public Long create(Cita minhaCita) {
@@ -87,40 +80,41 @@ public class CitaDAOImpl implements CitaDAO {
 
 	@Override
 	public List<Proba> findAllProbasData(LocalDate minhaData) {
+		LocalDateTime minhaData1 = minhaData.atStartOfDay();
+		LocalDateTime minhaData2 = minhaData.atTime(23,59);
+		
 		List<Proba> probas = (List<Proba>) sessionFactory.getCurrentSession().createQuery
-		("from prueba a join cita b "
-		+ "on a.id_cita = b.id_cita "
-		+ "where b.dataHota = minhaData "
-		+ "order by b.dataHota").setParameter("minhaData", minhaData).list();
+		("from Proba p "
+		+ "where (p.dataHora >= :minhaData1 AND p.dataHora <= :minhaData2) "
+		+ "order by p.dataHora").setParameter("minhaData1", minhaData1).setParameter("minhaData2", minhaData2).list();
 		return probas;
 	}
 
 	@Override
 	public List<Consulta> findAllConsultasPaciente(Paciente meuPaciente) {
 		List<Consulta> consultas = (List<Consulta>) sessionFactory.getCurrentSession().createQuery
-		("from cita a join consulta b"
-		+ "on a.id_cita = b.id_cita"
-		+ "where a.id_paciente = meuPaciente"
-		+ "orderby a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
+		("from Consulta a "
+		+ "where a.paciente = :meuPaciente "
+		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
 		return consultas;
 	}
 
 	@Override
 	public List<Proba> findAllProbasPaciente(Paciente meuPaciente) {
 		List<Proba> probas = (List<Proba>) sessionFactory.getCurrentSession().createQuery
-		("from cita a join prueba b"
-		+ "on a.id_cita = b.id_cita"
-		+ "where a.id_paciente = meuPaciente"
+		("from Proba a "
+		+ "where a.paciente = :meuPaciente "
 		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
 		return probas;
 	}
 
 	@Override
 	public SortedSet<Cita> findAllCitasPaciente(Paciente meuPaciente) {
+		//problema de conversion 
 		SortedSet<Cita> citas = (SortedSet<Cita>) sessionFactory.getCurrentSession().createQuery
-		("from citas "
-		+ "where id_paciente = meuPaciente"
-		+ "order by dataHora desc").setParameter("meuPaciente", meuPaciente).list();
+		("from Cita a "
+		+ "where a.paciente = :meuPaciente "
+		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
 		return citas;
 	}
 
