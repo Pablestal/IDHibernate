@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -41,7 +42,7 @@ public class Paciente {
 	@Column(name = "CODIGO", nullable = true)
 	private LocalDate dataNacemento;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinColumn(name="ID_PACIENTE")
 	@OrderBy("dataHora")
 	private SortedSet<Cita> citas = new TreeSet<Cita>();

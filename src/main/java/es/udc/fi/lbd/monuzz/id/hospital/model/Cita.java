@@ -2,6 +2,7 @@ package es.udc.fi.lbd.monuzz.id.hospital.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -33,9 +34,10 @@ public abstract class Cita implements Comparable<Cita> {
 	protected String codigo;
 	
 	@Column(name = "FECHA_CITA", nullable = false)
+	@Convert(converter=LocalDateTimeAttributeConverter.class)
 	protected LocalDateTime dataHora;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade= {})
 	@JoinColumn(name="ID_PACIENTE")
 	protected Paciente paciente;
 
@@ -65,7 +67,7 @@ public abstract class Cita implements Comparable<Cita> {
 
 	public String getCodigo() {return this.codigo;}
 
-	@Convert(converter=LocalDateTimeAttributeConverter.class)
+	
 	public LocalDateTime getDataHora() {return this.dataHora;}
 
 	public Paciente getPaciente() {return this.paciente;}
