@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,11 +112,14 @@ public class CitaDAOImpl implements CitaDAO {
 	@Override
 	public SortedSet<Cita> findAllCitasPaciente(Paciente meuPaciente) {
 		//problema de conversion 
-		SortedSet<Cita> citas = (SortedSet<Cita>) sessionFactory.getCurrentSession().createQuery
+		List<Cita> citas = (List<Cita>) sessionFactory.getCurrentSession().createQuery
 		("from Cita a "
 		+ "where a.paciente = :meuPaciente "
 		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
-		return citas;
+		TreeSet<Cita> cit = new TreeSet<Cita>();
+		cit.addAll(citas);
+		//meuPaciente.setCitas(cit); dudo que se haga asi
+		return cit;
 	}
 
 	@Override
