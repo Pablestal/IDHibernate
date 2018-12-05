@@ -82,6 +82,7 @@ public class PacienteServiceImpl implements PacienteService {
 		Paciente paciente;
 		try {
 			paciente = pacienteDAO.findPacienteByNum(num);
+			if (paciente == null) return paciente;
 			log.info("Paciente econtrado: " + paciente.toString());
 		}
 		catch (DataAccessException e) {

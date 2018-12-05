@@ -89,7 +89,7 @@ public class HospitalServiceImpl implements HospitalService {
 		Medico medico;
 		try {
 			medico = hospitalDAO.findMedicoByNumColexiado(numColexiado);
-			log.info("Medico encontrado: "+ medico.toString());
+			if (medico != null) log.info("Medico encontrado: "+ medico.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar el médico");
@@ -176,7 +176,7 @@ public class HospitalServiceImpl implements HospitalService {
 		TipoDoenza doenza;
 		try {
 			doenza = hospitalDAO.findTipoDoenzaByCodigo(codigo);
-			log.info("Tipo de dolencia encontrado: "+ doenza.toString());
+			if (doenza != null) log.info("Tipo de dolencia encontrado: "+ doenza.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar el tipo de dolencia");
@@ -218,7 +218,7 @@ public class HospitalServiceImpl implements HospitalService {
 	@Transactional(value="myTransactionManager", readOnly=false)
 	public void borradoTipoProbaBD(TipoProba minhaProba) {
 		try {
-			hospitalDAO.update(minhaProba);
+			hospitalDAO.remove(minhaProba);
 			log.info("Modificado el tipo de prueba: "+ minhaProba.toString());
 		}
 		catch (DataAccessException e) {
@@ -232,7 +232,7 @@ public class HospitalServiceImpl implements HospitalService {
 	@Transactional(value="myTransactionManager", readOnly=false)
 	public void modificacionTipoProbaBD(TipoProba minhaProba) {
 		try {
-			hospitalDAO.remove(minhaProba);
+			hospitalDAO.update(minhaProba);
 			log.info("Borrado el tipo de prueba: "+ minhaProba.toString());
 		}
 		catch (DataAccessException e) {
@@ -263,7 +263,7 @@ public class HospitalServiceImpl implements HospitalService {
 		TipoProba proba;
 		try {
 			proba = hospitalDAO.findTipoProbaByCodigo(codigo);
-			log.info("Tipo de prueba encontrado: "+ proba.toString());
+			if(proba != null) log.info("Tipo de prueba encontrado: "+ proba.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar el tipo de prueba.");
