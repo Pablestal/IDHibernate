@@ -118,7 +118,7 @@ public class CitaDAOImpl implements CitaDAO {
 		+ "order by a.dataHora desc").setParameter("meuPaciente", meuPaciente).list();
 		TreeSet<Cita> cit = new TreeSet<Cita>();
 		cit.addAll(citas);
-		//meuPaciente.setCitas(cit); dudo que se haga asi
+		meuPaciente.setCitas(cit);
 		return cit;
 	}
 
@@ -133,11 +133,9 @@ public class CitaDAOImpl implements CitaDAO {
 	}
 
 	@Override
-	public Set<TipoDoenza> findAllDoenzasConsulta(Consulta minhaCita) {
-		Set<TipoDoenza> doenzas = (Set<TipoDoenza>) sessionFactory.getCurrentSession().createQuery
-		("from consulta_dolencias"
-		+ "where consulta_id = minhaCita").setParameter("minhaCita", minhaCita).list();
-		return doenzas;
+	public Set<TipoDoenza> findAllDoenzasConsulta(Consulta minhaConsulta) {
+		return minhaConsulta.getDoenzas();
+		
 	}
 
 	@Override

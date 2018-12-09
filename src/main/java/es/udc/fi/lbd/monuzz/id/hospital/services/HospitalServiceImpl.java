@@ -339,7 +339,7 @@ public class HospitalServiceImpl implements HospitalService {
 		Cita cita;
 		try {
 			cita = citaDAO.findCitaById(id);
-			log.info("Cita encontrada: "+ cita.toString());
+			if (cita != null) log.info("Cita encontrada: "+ cita.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar la cita.");
@@ -354,7 +354,7 @@ public class HospitalServiceImpl implements HospitalService {
 		Cita cita;
 		try {
 			cita = citaDAO.findCitaByCodigo(codigo);
-			log.info("Cita encontrada: "+ cita.toString());
+			if (cita != null) log.info("Cita encontrada: "+ cita.toString());
 		}
 		catch (DataAccessException e) {
 			log.error("No se ha podido encontrar la cita.");
