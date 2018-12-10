@@ -4,6 +4,7 @@ package es.udc.fi.lbd.monuzz.id.hospital;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,8 +20,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import es.udc.fi.lbd.monuzz.id.hospital.model.Consulta;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Paciente;
+import es.udc.fi.lbd.monuzz.id.hospital.model.Proba;
 import es.udc.fi.lbd.monuzz.id.hospital.services.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,9 +38,11 @@ public class TestExtra {
 	@Autowired
 	private ExtraService extraService;
 	
-	
 	@Autowired
 	private PacienteService pacienteService;
+	
+	@Autowired
+	private HospitalService hospitalService;
 	
 
 	@Before
@@ -105,6 +110,7 @@ public class TestExtra {
 		
 		
 		
+		//encontrar todos los pacientes que tienen citas
 		List<Paciente> conjunto1 = extraService.findPacientesWithCitas();
 		List<Paciente> conjunto2 = new ArrayList<Paciente>();
 		
@@ -120,16 +126,15 @@ public class TestExtra {
 			assertEquals(it1.next(), it2.next());
 		}
 		
-		//añadimos un paciente pero no le asignamos citas
-		Paciente paciente_Z = new Paciente("Pac_POEKKJWHKJWH", "Paciente_KJHKJHJKH", LocalDate.of(1980, Month.JANUARY, 1));		
-		pacienteService.altaNovoPacienteBD(paciente_Z);
+		Paciente paciente_Y = new Paciente("Pac_Prueba", "Paciente_Prueba", LocalDate.of(1970, Month.JANUARY, 1));
+		pacienteService.altaNovoPacienteBD(paciente_Y);
 		
+		//comprobar que el paciente al no tener citas no se muestra
 		assertEquals(conjunto1.size(), conjunto2.size());
 		
-		//le asignamos una nueva cita
+		pacienteService.borradoPacienteBD(paciente_Y);
 		
-		
-	}
+		}
 	
 
 }
