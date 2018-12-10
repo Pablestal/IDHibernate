@@ -1,9 +1,15 @@
 package es.udc.fi.lbd.monuzz.id.hospital.daos;
 
+import java.util.List;
 
+import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
+import es.udc.fi.lbd.monuzz.id.hospital.model.Paciente;
 
-public class ExtraDAO {
+public interface ExtraDAO {
 
+	public Integer findCountConsultasMedico (Medico meuMedico);
 
-
+	public Medico findBestMedic();
+	
+	public List<Paciente> findPacientesWithCitas ();
 }
