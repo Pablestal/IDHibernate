@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.fi.lbd.monuzz.id.hospital.daos.CitaDAO;
 import es.udc.fi.lbd.monuzz.id.hospital.daos.HospitalDAO;
-import es.udc.fi.lbd.monuzz.id.hospital.daos.PacienteDAO;
 import es.udc.fi.lbd.monuzz.id.hospital.model.*;
 
 @Service
@@ -26,9 +25,7 @@ public class HospitalServiceImpl implements HospitalService {
 	
 	@Autowired
 	private CitaDAO citaDAO;
-	
-	@Autowired
-	private PacienteDAO pacienteDAO;
+
 	
 	@Override
 	@Transactional(value="myTransactionManager", readOnly=false)

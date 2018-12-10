@@ -4,7 +4,6 @@ package es.udc.fi.lbd.monuzz.id.hospital;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,10 +19,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import es.udc.fi.lbd.monuzz.id.hospital.model.Consulta;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Paciente;
-import es.udc.fi.lbd.monuzz.id.hospital.model.Proba;
 import es.udc.fi.lbd.monuzz.id.hospital.services.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,9 +37,6 @@ public class TestExtra {
 	
 	@Autowired
 	private PacienteService pacienteService;
-	
-	@Autowired
-	private HospitalService hospitalService;
 	
 
 	@Before

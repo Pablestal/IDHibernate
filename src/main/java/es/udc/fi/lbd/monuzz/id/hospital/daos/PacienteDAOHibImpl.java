@@ -3,7 +3,6 @@ package es.udc.fi.lbd.monuzz.id.hospital.daos;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,7 +56,7 @@ public class PacienteDAOHibImpl implements PacienteDAO {
 
 	@Override
 	public List<Paciente> findAllPacientes() {
-		List<Paciente> pacientes = (List<Paciente>) sessionFactory.getCurrentSession().createQuery("from Paciente p order by p.numPaciente desc").list();
+		List<Paciente> pacientes = (List<Paciente>) sessionFactory.getCurrentSession().createQuery("from Paciente order by numPaciente desc").list();
 		return pacientes;
 	}
 

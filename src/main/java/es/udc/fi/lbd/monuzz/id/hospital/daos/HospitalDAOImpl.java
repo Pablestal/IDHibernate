@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.dao.DataAccessException;
 import es.udc.fi.lbd.monuzz.id.hospital.model.Medico;
 import es.udc.fi.lbd.monuzz.id.hospital.model.TipoDoenza;
 import es.udc.fi.lbd.monuzz.id.hospital.model.TipoProba;
