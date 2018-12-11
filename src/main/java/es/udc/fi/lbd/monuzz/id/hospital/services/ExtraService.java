@@ -10,10 +10,10 @@ public interface ExtraService  {
 	//calcula el número de consultas que tiene un médico
 	public Integer findCountConsultasMedico (Medico meuMedico);
 
-	//devuelve al medico con mas consultas
-	public Medico findBestMedic();
+	//devuelve al medico con la consulta mas reciente
+	public Medico findLastMedic();
 	
-	//encuentra todos los pacientes que tienen citas
-	public List<Paciente> findPacientesWithCitas();
+	//encuentra todos los pacientes que no tienen citas
+	public List<Paciente> findPacientesWithoutCitas();
 	
 }

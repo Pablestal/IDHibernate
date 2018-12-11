@@ -29,7 +29,7 @@ public class ExtraDAOImpl implements ExtraDAO{
 
 	@Override
 	@Transactional(value="myTransactionManager", readOnly=true)
-	public Medico findBestMedic() {
+	public Medico findLastMedic() {
 		Medico medico = (Medico) sessionFactory.getCurrentSession().createQuery
 				("select m.medico from Consulta m "
 						+ "where m = (select max(a) from Consulta a)").uniqueResult();
@@ -39,13 +39,11 @@ public class ExtraDAOImpl implements ExtraDAO{
 
 	@Override
 	@Transactional(value="myTransactionManager", readOnly=true)
-	public List<Paciente> findPacientesWithCitas() {
+	public List<Paciente> findPacientesWithoutCitas() {
 		List<Paciente> lista = (List<Paciente>) sessionFactory.getCurrentSession().createQuery(
-				"select p from Paciente p " + 
-					"right join p.citas as pr " + 
-					"group by p.idPaciente " +
-					"order by p.idPaciente"
-				).list();
+				"select p from Paciente p "
+				+ "left join p.citas c where c is null "
+				+ "order by p.idPaciente").list();
 		return lista;
 	}
 

@@ -100,16 +100,18 @@ public class TestExtra {
 		
 		
 		//probando la subconsulta, deberia devolver el medico con mas consultas, en este caso el medico B, que tiene 2
-		assertEquals(extraService.findBestMedic(), testUtils.medico_B);
+		assertEquals(extraService.findLastMedic(), testUtils.medico_B);
 		
 		
 		
 		//encontrar todos los pacientes que tienen citas
-		List<Paciente> conjunto1 = extraService.findPacientesWithCitas();
+		List<Paciente> conjunto1 = extraService.findPacientesWithoutCitas();
 		List<Paciente> conjunto2 = new ArrayList<Paciente>();
 		
-		conjunto2.add(testUtils.paciente_W);
-		conjunto2.add(testUtils.paciente_X);
+		conjunto2.add(testUtils.paciente_Y);
+		conjunto2.add(testUtils.paciente_Z);
+
+		
 		Iterator<Paciente> it1 = conjunto1.iterator();
 		Iterator<Paciente> it2 = conjunto2.iterator();
 		
@@ -120,13 +122,22 @@ public class TestExtra {
 			assertEquals(it1.next(), it2.next());
 		}
 		
-		Paciente paciente_Y = new Paciente("Pac_Prueba", "Paciente_Prueba", LocalDate.of(1970, Month.JANUARY, 1));
-		pacienteService.altaNovoPacienteBD(paciente_Y);
 		
-		//comprobar que el paciente al no tener citas no se muestra
+		//comprobar que el paciente al no tener citas se muestra en la lista
+		Paciente paciente_Prueba = new Paciente("Pac_Prueba", "Paciente_Prueba", LocalDate.of(1970, Month.JANUARY, 1));
+		pacienteService.altaNovoPacienteBD(paciente_Prueba);
+		
+		conjunto1 = extraService.findPacientesWithoutCitas();
+		conjunto2.add(paciente_Prueba);
+		
+		
 		assertEquals(conjunto1.size(), conjunto2.size());
 		
-		pacienteService.borradoPacienteBD(paciente_Y);
+		while(it1.hasNext()) {
+			assertEquals(it1.next(), it2.next());
+		}
+		
+		pacienteService.borradoPacienteBD(paciente_Prueba);
 		
 		}
 	

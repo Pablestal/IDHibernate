@@ -34,10 +34,10 @@ public class ExtraServiceImpl implements ExtraService {
 	}
 
 	@Override
-	public Medico findBestMedic() {
+	public Medico findLastMedic() {
 		Medico medico;
 		try {
-			medico = extraDAO.findBestMedic();
+			medico = extraDAO.findLastMedic();
 			if (medico !=null ) log.info("El mejor medico es : " + medico.toString());
 		}
 		catch (DataAccessException e) {
@@ -48,10 +48,10 @@ public class ExtraServiceImpl implements ExtraService {
 	}
 
 	@Override
-	public List<Paciente> findPacientesWithCitas() {
+	public List<Paciente> findPacientesWithoutCitas() {
 		List<Paciente> lista;
 		try {
-			lista = extraDAO.findPacientesWithCitas();
+			lista = extraDAO.findPacientesWithoutCitas();
 			log.info("Encontrados estos pacientes: " + lista.toString());
 		}
 		catch (DataAccessException e) {

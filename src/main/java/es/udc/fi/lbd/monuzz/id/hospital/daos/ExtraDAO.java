@@ -9,7 +9,7 @@ public interface ExtraDAO {
 
 	public Integer findCountConsultasMedico (Medico meuMedico);
 
-	public Medico findBestMedic();
+	public Medico findLastMedic();
 	
-	public List<Paciente> findPacientesWithCitas ();
+	public List<Paciente> findPacientesWithoutCitas ();
 }
