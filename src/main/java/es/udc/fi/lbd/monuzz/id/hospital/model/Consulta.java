@@ -28,7 +28,7 @@ public class Consulta extends Cita {
 	@Column(name = "INFORME", nullable = true)
 	private String informe;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {})
 	@JoinTable(
 			name = "CONSULTA_DOLENCIAS",
 			joinColumns = {@JoinColumn(name = "consulta_id")},
