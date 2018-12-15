@@ -18,7 +18,7 @@ public class Proba extends Cita {
 	@Column(name = "ESPECIFICACIONES", nullable = false)
 	private String especificacions;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = {})
 	@JoinColumn(name="ID_TIPO_PRUEBA")
 	private TipoProba tipoProba;
 	

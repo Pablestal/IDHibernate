@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Consulta extends Cita {
 	@Column(name = "INFORME", nullable = true)
 	private String informe;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(
 			name = "CONSULTA_DOLENCIAS",
 			joinColumns = {@JoinColumn(name = "consulta_id")},
